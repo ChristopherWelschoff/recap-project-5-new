@@ -1,6 +1,7 @@
 import Image from "next/image";
+import { FavoriteButton } from "../FavoriteButton/FavoriteButton";
 
-export default function ArtPiece({ piece }) {
+export default function ArtPiece({ favoriteArt, piece, onToggle }) {
   return (
     <>
       <Image
@@ -12,6 +13,13 @@ export default function ArtPiece({ piece }) {
       />
       <h2>{piece.name}</h2>
       <p>by {piece.artist}</p>
+      <FavoriteButton
+        isFavorite={favoriteArt.find(
+          (favPiece) => favPiece.slug === piece.slug
+        )}
+        onToggle={onToggle}
+        slug={piece.slug}
+      />
     </>
   );
 }

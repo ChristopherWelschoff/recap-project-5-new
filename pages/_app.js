@@ -8,6 +8,7 @@ export default function App({ Component, pageProps }) {
   const [art, setArt] = useState([]);
   const [isLoading, setisLoading] = useState(false);
   const [error, setError] = useState(false);
+  const [favoriteArt, setfavoriteArt] = useState([]);
 
   useEffect(() => {
     async function fetchArt() {
@@ -27,10 +28,30 @@ export default function App({ Component, pageProps }) {
     }
     fetchArt();
   }, []);
+
+  function handleToggleFavorite(slug) {
+    if (favoriteArt.find((piece) => piece.slug === slug)) {
+      setfavoriteArt(favoriteArt.filter((piece) => piece.slug !== slug));
+    } else {
+      setfavoriteArt([
+        ...favoriteArt,
+        art.find((piece) => piece.slug === slug),
+      ]);
+    }
+  }
+  console.log(favoriteArt);
+
   return (
     <>
       <GlobalStyle />
-      <Component art={art} isLoading={isLoading} error={error} {...pageProps} />
+      <Component
+        favoriteArt={favoriteArt}
+        art={art}
+        isLoading={isLoading}
+        error={error}
+        onToggle={handleToggleFavorite}
+        {...pageProps}
+      />
       <Navigation />
     </>
   );

@@ -1,10 +1,10 @@
 import ArtPiecesList from "@/components/ArtPiecesList/ArtPiecesList";
 
-export default function ArtPieces({art}) {
+export default function ArtPieces({ favoriteArt, art, onToggle }) {
   return (
     <>
       <h1>Art Gallery</h1>
-      <ArtPiecesList fetchedPieces={art} />
+      <ArtPiecesList favoriteArt={favoriteArt}  onToggle={onToggle} fetchedPieces={art} />
     </>
   );
 }
