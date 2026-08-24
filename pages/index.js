@@ -1,32 +1,8 @@
-import { useEffect, useState } from "react";
+
 import Image from "next/image";
 
-export default function HomePage() {
-  const URL = "https://example-apis.vercel.app/api/art";
-
-  const [art, setArt] = useState([]);
-  const [isLoading, setisLoading] = useState(false);
-  const [error, setError] = useState(false);
+export default function HomePage({ art, isLoading, error }) {
   const spotlightArt = art.length !== 0 ? getRandomArt(art) : {};
-
-  useEffect(() => {
-    async function fetchArt() {
-      setisLoading(true);
-      try {
-        const response = await fetch(URL);
-
-        if (!response.ok) {
-          throw new Error("HTTP-Fehler");
-        }
-        const data = await response.json();
-        setArt(data);
-      } catch (error) {
-        setError(true);
-      }
-      setisLoading(false);
-    }
-    fetchArt();
-  }, []);
 
   function getRandomArt(artArray) {
     const randomArtIndex = Math.floor(Math.random() * artArray.length);
