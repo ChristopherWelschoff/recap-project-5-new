@@ -8,7 +8,7 @@ export default function App({ Component, pageProps }) {
   const [art, setArt] = useState([]);
   const [isLoading, setisLoading] = useState(false);
   const [error, setError] = useState(false);
-
+  console.log(art);
   useEffect(() => {
     async function fetchArt() {
       setisLoading(true);

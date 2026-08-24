@@ -1,4 +1,4 @@
-
+import Link from "next/link";
 import Image from "next/image";
 
 export default function HomePage({ art, isLoading, error }) {
@@ -16,11 +16,13 @@ export default function HomePage({ art, isLoading, error }) {
       ) : (
         <div>
           <p>{spotlightArt.artist}</p>
-          <Image
-            src={spotlightArt.imageSource}
-            width={spotlightArt.dimensions.width}
-            height={spotlightArt.dimensions.height}
-          />
+          <Link href={`/art-pieces/${spotlightArt.slug}`}>
+            <Image
+              src={spotlightArt.imageSource}
+              width={spotlightArt.dimensions.width}
+              height={spotlightArt.dimensions.height}
+            />
+          </Link>
         </div>
       )}
       {error && <p>Error fetching data...</p>}
