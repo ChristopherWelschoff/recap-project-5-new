@@ -1,14 +1,13 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 
-
 export default function HomePage() {
   const URL = "https://example-apis.vercel.app/api/art";
 
-  const [art, setArt] = useState();
-  const [isLoading, setisLoading] = useState(true);
+  const [art, setArt] = useState([]);
+  const [isLoading, setisLoading] = useState(false);
   const [error, setError] = useState(false);
-  const [spotlightArt, setSpotlightArt] = useState(art);
+  const spotlightArt = art.length !== 0 ? getRandomArt(art) : {};
 
   useEffect(() => {
     async function fetchArt() {
@@ -21,7 +20,6 @@ export default function HomePage() {
         }
         const data = await response.json();
         setArt(data);
-        setSpotlightArt(getRandomArt(data));
       } catch (error) {
         setError(true);
       }
@@ -37,8 +35,8 @@ export default function HomePage() {
 
   return (
     <div>
-      {isLoading ? (
-        <p>Loading...</p>
+      {art.length === 0 ? (
+        isLoading && <p>Loading...</p>
       ) : (
         <div>
           <p>{spotlightArt.artist}</p>
@@ -49,9 +47,7 @@ export default function HomePage() {
           />
         </div>
       )}
-      <p>{error ? "Error fetching data..." : ""}</p>
+      {error && <p>Error fetching data...</p>}
     </div>
   );
 }
-
-
