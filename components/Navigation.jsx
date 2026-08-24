@@ -1,12 +1,13 @@
-import { useRouter } from "next/router";
-
+import Link from "next/link";
 export default function Navigation() {
-  const router = useRouter();
   return (
     <nav>
-      <button onClick={() => router.push("/Spotlight")}>Spotlight</button>
-      <button onClick={() => router.push("/")}>Home</button>
-      <button onClick={() => router.push("/Gallery")}>Gallery</button>
+      {" "}
+      <Link href="/">Home</Link>
+      <br />
+      <Link href="/Spotlight">Spotlight</Link>
+      <br />
+      <Link href="/Gallery">Gallery</Link>
     </nav>
   );
 }
