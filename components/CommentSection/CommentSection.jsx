@@ -5,6 +5,8 @@ export default function CommentSection({ comments, slug }) {
     (comment) => comment.piece === slug
   )?.comments;
 
+  console.log(pieceComments);
+
   return (
     <section>
       <h3>Comments:</h3>

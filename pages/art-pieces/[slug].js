@@ -13,7 +13,6 @@ export default function ArtPieceDetail({
   comments,
   onAddComment,
 }) {
-
   const router = useRouter();
   const { slug } = router.query;
   const piece = art.find((p) => p.slug === slug);
@@ -39,16 +38,17 @@ export default function ArtPieceDetail({
           alignItems: "center",
         }}
       >
-        <Title>{piece.name}</Title>
-   <ColorPalette colors={piece.colors} />
-        <FavoriteButton
-          onToggle={onToggle}
-          slug={slug}
-          isFavorite={isFavorite}
-        />
-      </div>
+        <StyledPalletContainer>
+          <ColorPalette colors={piece.colors} />
+          <Title>{piece.name}</Title>
 
-   
+          <FavoriteButton
+            onToggle={onToggle}
+            slug={slug}
+            isFavorite={isFavorite}
+          />
+        </StyledPalletContainer>
+      </div>
 
       <Artist>by {piece.artist}</Artist>
 
@@ -65,6 +65,13 @@ export default function ArtPieceDetail({
     </DetailWrapper>
   );
 }
+
+const StyledPalletContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+`;
 
 const DetailWrapper = styled.div`
   max-width: 700px;
