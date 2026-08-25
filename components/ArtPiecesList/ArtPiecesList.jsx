@@ -32,8 +32,6 @@ export default function ArtPiecesList({
   );
 }
 
-
-
 const StyledList = styled.ul`
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
@@ -44,6 +42,7 @@ const StyledList = styled.ul`
 `;
 
 const StyledCard = styled.li`
+  padding: 10px;
   position: relative;
   border-radius: 12px;
   overflow: hidden;
