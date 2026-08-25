@@ -1,8 +1,14 @@
+import styled from "styled-components";
+
 export default function Comment({ date, text }) {
   return (
     <article>
-      <p>{date}</p>
-      <p><b><em>{text}</em></b></p>
+      <ul>{date}</ul>
+      <p>
+        <b>
+          <em>{text}</em>
+        </b>
+      </p>
     </article>
   );
 }

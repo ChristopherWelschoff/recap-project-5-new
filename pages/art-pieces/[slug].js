@@ -1,13 +1,23 @@
 import CommentForm from "@/components/CommentForm/CommentForm";
 import CommentSection from "@/components/CommentSection/CommentSection";
+import { FavoriteButton } from "@/components/FavoriteButton/FavoriteButton";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import styled from "styled-components";
 import ColorPalette from "@/components/ColorPallate/CollorPalette";
-export default function ArtPieceDetail({ art, comments, onAddComment }) {
+
+export default function ArtPieceDetail({
+  favoriteArts,
+  onToggle,
+  art,
+  comments,
+  onAddComment,
+}) {
+
   const router = useRouter();
   const { slug } = router.query;
   const piece = art.find((p) => p.slug === slug);
+  const isFavorite = favoriteArts.some((fav) => fav.slug === piece.slug);
   if (!piece) return <p>Loading ...</p>;
 
   return (
@@ -21,17 +31,36 @@ export default function ArtPieceDetail({ art, comments, onAddComment }) {
           alt={piece.name}
         />
       </ImageWrapper>
-      <ColorPalette colors={piece.colors} />
-      <Title>{piece.name}</Title>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          gap: "5px",
+          alignItems: "center",
+        }}
+      >
+        <Title>{piece.name}</Title>
+   <ColorPalette colors={piece.colors} />
+        <FavoriteButton
+          onToggle={onToggle}
+          slug={slug}
+          isFavorite={isFavorite}
+        />
+      </div>
+
+   
+
       <Artist>by {piece.artist}</Artist>
 
       <ArtistDetails>
         <MetaItem>{piece.year}</MetaItem>
-        <MetaDivider>·</MetaDivider>
+        <span>·</span>
         <MetaItem>{piece.genre}</MetaItem>
       </ArtistDetails>
+
       <CommentSection comments={comments} slug={slug} />
       <CommentForm slug={slug} onAddComment={onAddComment} />
+
       <BackButton onClick={() => router.push("/art-pieces")}>← Back</BackButton>
     </DetailWrapper>
   );
@@ -80,8 +109,6 @@ const MetaItem = styled.h3`
   font-size: inherit;
   margin: 0;
 `;
-
-const MetaDivider = styled.span``;
 
 const BackButton = styled.button`
   background: none;
