@@ -64,7 +64,7 @@ const ArtistDetails = styled.div`
   display: flex;
   justify-content: center;
   gap: 8px;
-  color: #e8e6e3
+  color: #e8e6e3;
   font-size: 0.9rem;
   margin-bottom: 32px;
 `;
