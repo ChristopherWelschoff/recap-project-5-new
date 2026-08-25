@@ -1,7 +1,9 @@
+import CommentForm from "@/components/CommentForm/CommentForm";
+import CommentSection from "@/components/CommentSection/CommentSection";
 import Image from "next/image";
 import { useRouter } from "next/router";
 
-export default function ArtPieceDetail({ art }) {
+export default function ArtPieceDetail({ art, comments, onAddComment }) {
   const router = useRouter();
   const { slug } = router.query;
   const piece = art.find((p) => p.slug === slug);
@@ -12,12 +14,14 @@ export default function ArtPieceDetail({ art }) {
       <h2>{piece.year}</h2>
       <h3>{piece.genre}</h3>
       <p>by {piece.artist}</p>
-
       <Image
         src={piece.imageSource}
         width={piece.dimensions.width}
         height={piece.dimensions.height}
+        alt={piece.name}
       />
+      <CommentSection comments={comments} slug={slug} />
+      <CommentForm slug={slug} onAddComment={onAddComment} />
       <button onClick={() => router.push("/art-pieces")}>Back</button>
     </div>
   );

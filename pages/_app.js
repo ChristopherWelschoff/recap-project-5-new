@@ -12,6 +12,9 @@ export default function App({ Component, pageProps }) {
   const [favoriteArts, setFavoriteArts] = useLocalStorageState("Favorites", {
     defaultValue: [],
   });
+  const [comments, setComments] = useLocalStorageState("Comments", {
+    defaultValue: [],
+  });
 
   useEffect(() => {
     async function fetchArt() {
@@ -41,13 +44,39 @@ export default function App({ Component, pageProps }) {
       setFavoriteArts([...favoriteArts, newFavoriteArt]);
     }
   }
+
+  function handleAddComment(slug, inputText, date) {
+    const isInComments = comments.some((comment) => comment.piece === slug);
+    if (isInComments) {
+      setComments((prev) =>
+        prev.map((comment) =>
+          comment.piece !== slug
+            ? { ...comment }
+            : {
+                ...comment,
+                comments: [
+                  ...comment.comments,
+                  { text: inputText, date: date },
+                ],
+              }
+        )
+      );
+    } else {
+      setComments((prev) => [
+        ...prev,
+        { piece: slug, comments: [{ text: inputText, date: date }] },
+      ]);
+    }
+  }
   return (
     <>
       <GlobalStyle />
       <Component
         favoriteArts={favoriteArts}
         onToggle={toggleFavoriteArt}
+        onAddComment={handleAddComment}
         art={art}
+        comments={comments}
         isLoading={isLoading}
         error={error}
         {...pageProps}
