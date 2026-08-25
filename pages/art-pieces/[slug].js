@@ -42,9 +42,10 @@ const DetailWrapper = styled.div`
 `;
 
 const ImageWrapper = styled.div`
-  border-radius: 7px;
+  display: flex;
+  margin: 80px auto;
+  border-radius: 5px;
   overflow: hidden;
-  margin-bottom: 24px;
 `;
 
 const Title = styled.h1`
