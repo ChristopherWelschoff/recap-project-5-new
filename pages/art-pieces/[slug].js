@@ -1,8 +1,10 @@
+import CommentForm from "@/components/CommentForm/CommentForm";
+import CommentSection from "@/components/CommentSection/CommentSection";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import styled from "styled-components";
 
-export default function ArtPieceDetail({ art }) {
+export default function ArtPieceDetail({ art, comments, onAddComment }) {
   const router = useRouter();
   const { slug } = router.query;
   const piece = art.find((p) => p.slug === slug);
@@ -26,7 +28,8 @@ export default function ArtPieceDetail({ art }) {
         <MetaDivider>·</MetaDivider>
         <MetaItem>{piece.genre}</MetaItem>
       </ArtistDetails>
-
+      <CommentSection comments={comments} slug={slug} />
+      <CommentForm slug={slug} onAddComment={onAddComment} />
       <BackButton onClick={() => router.push("/art-pieces")}>← Back</BackButton>
     </DetailWrapper>
   );
