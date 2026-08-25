@@ -1,13 +1,21 @@
 import CommentForm from "@/components/CommentForm/CommentForm";
 import CommentSection from "@/components/CommentSection/CommentSection";
+import { FavoriteButton } from "@/components/FavoriteButton/FavoriteButton";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import styled from "styled-components";
 
-export default function ArtPieceDetail({ art, comments, onAddComment }) {
+export default function ArtPieceDetail({
+  favoriteArts,
+  onToggle,
+  art,
+  comments,
+  onAddComment,
+}) {
   const router = useRouter();
   const { slug } = router.query;
   const piece = art.find((p) => p.slug === slug);
+  const isFavorite = favoriteArts.some((fav) => fav.slug === piece.slug);
   if (!piece) return <p>Loading ...</p>;
   return (
     <DetailWrapper>
@@ -19,8 +27,22 @@ export default function ArtPieceDetail({ art, comments, onAddComment }) {
           style={{ width: "100%", height: "auto" }}
         />
       </ImageWrapper>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          gap: "5px",
+          alignItems: "center",
+        }}
+      >
+        <Title>{piece.name}</Title>
+        <FavoriteButton
+          onToggle={onToggle}
+          slug={slug}
+          isFavorite={isFavorite}
+        />
+      </div>
 
-      <Title>{piece.name}</Title>
       <Artist>by {piece.artist}</Artist>
 
       <ArtistDetails>
@@ -28,8 +50,10 @@ export default function ArtPieceDetail({ art, comments, onAddComment }) {
         <span>·</span>
         <MetaItem>{piece.genre}</MetaItem>
       </ArtistDetails>
+
       <CommentSection comments={comments} slug={slug} />
       <CommentForm slug={slug} onAddComment={onAddComment} />
+
       <BackButton onClick={() => router.push("/art-pieces")}>← Back</BackButton>
     </DetailWrapper>
   );
