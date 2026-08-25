@@ -12,6 +12,17 @@ export default function App({ Component, pageProps }) {
   const [favoriteArts, setFavoriteArts] = useLocalStorageState("Favorites", {
     defaultValue: [],
   });
+  const [comments, setComments] = useLocalStorageState("Comments", {
+    defaultValue: [
+      {
+        piece: "wheat-field-with-cypresses",
+        comments: [
+          { text: "cool painting", date: "2026-08-25T10:31:28.268Z" },
+          { text: "this shit is insane", date: "2026-08-25T10:33:28.268Z" },
+        ],
+      },
+    ],
+  });
 
   useEffect(() => {
     async function fetchArt() {
@@ -41,13 +52,39 @@ export default function App({ Component, pageProps }) {
       setFavoriteArts([...favoriteArts, newFavoriteArt]);
     }
   }
+
+  function handleAddComment(slug, inputText, date) {
+    const isInComments = comments.some((comment) => comment.piece === slug);
+    if (isInComments) {
+      setComments((prev) =>
+        prev.map((comment) =>
+          comment.piece !== slug
+            ? { ...comment }
+            : {
+                ...comment,
+                comments: [
+                  ...comment.comments,
+                  { text: inputText, date: date },
+                ],
+              }
+        )
+      );
+    } else {
+      setComments((prev) => [
+        ...prev,
+        { piece: slug, comments: [{ text: inputText, date: date }] },
+      ]);
+    }
+  }
   return (
     <>
       <GlobalStyle />
       <Component
         favoriteArts={favoriteArts}
         onToggle={toggleFavoriteArt}
+        onAddComment={handleAddComment}
         art={art}
+        comments={comments}
         isLoading={isLoading}
         error={error}
         {...pageProps}
