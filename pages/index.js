@@ -2,6 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { FavoriteButton } from "@/components/FavoriteButton/FavoriteButton";
 import { useEffect, useState } from "react";
+import styled from "styled-components";
 
 function getRandomArt(artArray) {
   const randomArtIndex = Math.floor(Math.random() * artArray.length);
@@ -27,27 +28,54 @@ export default function HomePage({
     spotlightArt && favoriteArts.some((fav) => fav.slug === spotlightArt.slug);
 
   return (
-    <div>
+    <SpotlightWrapper>
       {!spotlightArt ? (
         isLoading && <p>Loading...</p>
       ) : (
         <div>
-          <p>{spotlightArt.artist}</p>
+          <StyledTitle>
+            <ArtistName>{spotlightArt.artist}</ArtistName>
+
+            <FavoriteButton
+              isFavorite={isFavorite}
+              onToggle={() => onToggle(spotlightArt.slug)}
+            />
+          </StyledTitle>
           <Link href={`/art-pieces/${spotlightArt.slug}`}>
-          <Image
-            alt="sptlightArt"
-            src={spotlightArt.imageSource}
-            width={spotlightArt.dimensions.width}
-            height={spotlightArt.dimensions.height}
-          />
+            <Image
+              alt="sptlightArt"
+              src={spotlightArt.imageSource}
+              width={spotlightArt.dimensions.width}
+              height={spotlightArt.dimensions.height}
+              style={{ width: "100%", height: "auto" }}
+            />
           </Link>
-          <FavoriteButton
-            isFavorite={isFavorite}
-            onToggle={() => onToggle(spotlightArt.slug)}
-          />
         </div>
       )}
       {error && <p>Error fetching data...</p>}
-    </div>
+    </SpotlightWrapper>
   );
 }
+
+const SpotlightWrapper = styled.div`
+  display: flex;
+  max-width: auto;
+  margin: 60px auto;
+  text-align: left;
+`;
+
+const ArtistName = styled.p`
+  flex-wrap: wrap;
+  align-items: center;
+  font-size: 2rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-top: 16px;
+`;
+
+const StyledTitle = styled.div`
+  display: flex;
+  align-items: baseline;
+  gap: 2px;
+  margin-top: 16px;
+`;
