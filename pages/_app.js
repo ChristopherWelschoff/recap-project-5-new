@@ -39,7 +39,6 @@ export default function App({ Component, pageProps }) {
       setFavoriteArts([...favoriteArts, newFavoriteArt]);
     }
   }
-
   return (
     <>
       <GlobalStyle />

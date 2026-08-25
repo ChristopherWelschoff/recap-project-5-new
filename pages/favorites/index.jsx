@@ -38,11 +38,16 @@ const dummyArray = [
   },
 ];
 
-export default function Favorites({ favoritesArray = dummyArray }) {
+export default function Favorites({ favoriteArts, onToggle }) {
   return (
     <main>
       <h1>Favorites</h1>
-      <ArtPiecesList fetchedPieces={favoritesArray} />
+      {favoriteArts.length === 0 && <p>No favorites...</p>}
+      <ArtPiecesList
+        fetchedPieces={favoriteArts}
+        favoriteArts={favoriteArts}
+        onToggle={onToggle}
+      />
     </main>
   );
 }
