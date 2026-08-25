@@ -4,6 +4,7 @@ import { FavoriteButton } from "@/components/FavoriteButton/FavoriteButton";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import styled from "styled-components";
+import ColorPalette from "@/components/ColorPallate/CollorPalette";
 
 export default function ArtPieceDetail({
   favoriteArts,
@@ -12,11 +13,13 @@ export default function ArtPieceDetail({
   comments,
   onAddComment,
 }) {
+
   const router = useRouter();
   const { slug } = router.query;
   const piece = art.find((p) => p.slug === slug);
   const isFavorite = favoriteArts.some((fav) => fav.slug === piece.slug);
   if (!piece) return <p>Loading ...</p>;
+
   return (
     <DetailWrapper>
       <ImageWrapper>
@@ -25,6 +28,7 @@ export default function ArtPieceDetail({
           width={piece.dimensions.width}
           height={piece.dimensions.height}
           style={{ width: "100%", height: "auto" }}
+          alt={piece.name}
         />
       </ImageWrapper>
       <div
@@ -36,12 +40,15 @@ export default function ArtPieceDetail({
         }}
       >
         <Title>{piece.name}</Title>
+   <ColorPalette colors={piece.colors} />
         <FavoriteButton
           onToggle={onToggle}
           slug={slug}
           isFavorite={isFavorite}
         />
       </div>
+
+   
 
       <Artist>by {piece.artist}</Artist>
 
