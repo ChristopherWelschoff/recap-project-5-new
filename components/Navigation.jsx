@@ -12,12 +12,16 @@ export default function Navigation() {
 }
 
 const StyledNav = styled.nav`
+  background: #393941;
   display: flex;
   align-items: center;
   gap: 32px;
   padding: 16px 24px;
   border-bottom: 3px solid white;
   width: 100%;
+  position: fixed;
+  top: 0;
+  z-index: 100;
 `;
 
 const StyledLink = styled(Link)`
