@@ -1,25 +1,46 @@
-
 import Image from "next/image";
+import { FavoriteButton } from "@/components/FavoriteButton/FavoriteButton";
+import { useEffect, useState } from "react";
 
-export default function HomePage({ art, isLoading, error }) {
-  const spotlightArt = art.length !== 0 ? getRandomArt(art) : {};
+function getRandomArt(artArray) {
+  const randomArtIndex = Math.floor(Math.random() * artArray.length);
+  return artArray[randomArtIndex];
+}
 
-  function getRandomArt(artArray) {
-    const randomArtIndex = Math.floor(Math.random() * artArray.length);
-    return artArray[randomArtIndex];
-  }
+export default function HomePage({
+  onToggle,
+  art,
+  isLoading,
+  error,
+  favoriteArts,
+}) {
+  const [spotlightArt, setSpotlightArt] = useState(null);
+
+  useEffect(() => {
+    if (art.length !== 0) {
+      setSpotlightArt(getRandomArt(art));
+    }
+  }, [art]);
+
+  const isFavorite =
+    spotlightArt && favoriteArts.some((fav) => fav.slug === spotlightArt.slug);
 
   return (
     <div>
-      {art.length === 0 ? (
+      {!spotlightArt ? (
         isLoading && <p>Loading...</p>
       ) : (
         <div>
           <p>{spotlightArt.artist}</p>
           <Image
+            alt="sptlightArt"
             src={spotlightArt.imageSource}
             width={spotlightArt.dimensions.width}
             height={spotlightArt.dimensions.height}
+          />
+          <FavoriteButton
+            isFavorite={isFavorite}
+            onToggle={() => onToggle(spotlightArt.slug)}
           />
         </div>
       )}

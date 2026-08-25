@@ -1,6 +1,7 @@
 import GlobalStyle from "../styles";
 import Navigation from "@/components/Navigation";
 import { useState, useEffect } from "react";
+import { FavoriteButton } from "@/components/FavoriteButton/FavoriteButton";
 
 export default function App({ Component, pageProps }) {
   const URL = "https://example-apis.vercel.app/api/art";
@@ -8,6 +9,7 @@ export default function App({ Component, pageProps }) {
   const [art, setArt] = useState([]);
   const [isLoading, setisLoading] = useState(false);
   const [error, setError] = useState(false);
+  const [favoriteArts, setFavoriteArts] = useState([]);
 
   useEffect(() => {
     async function fetchArt() {
@@ -27,10 +29,28 @@ export default function App({ Component, pageProps }) {
     }
     fetchArt();
   }, []);
+
+  function toggleFavoriteArt(slug) {
+    const isAllreadyFavorite = favoriteArts.some((art) => art.slug === slug);
+    const newFavoriteArt = art.find((art) => art.slug === slug);
+    if (isAllreadyFavorite) {
+      setFavoriteArts(favoriteArts.filter((art) => art.slug !== slug));
+    } else {
+      setFavoriteArts([...favoriteArts, newFavoriteArt]);
+    }
+  }
+
   return (
     <>
       <GlobalStyle />
-      <Component art={art} isLoading={isLoading} error={error} {...pageProps} />
+      <Component
+        favoriteArts={favoriteArts}
+        onToggle={toggleFavoriteArt}
+        art={art}
+        isLoading={isLoading}
+        error={error}
+        {...pageProps}
+      />
       <Navigation />
     </>
   );
