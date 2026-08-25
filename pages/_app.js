@@ -2,6 +2,7 @@ import GlobalStyle from "../styles";
 import Navigation from "@/components/Navigation";
 import { useState, useEffect } from "react";
 import useLocalStorageState from "use-local-storage-state";
+import styled from "styled-components";
 
 export default function App({ Component, pageProps }) {
   const URL = "https://example-apis.vercel.app/api/art";
@@ -44,15 +45,22 @@ export default function App({ Component, pageProps }) {
   return (
     <>
       <GlobalStyle />
-      <Component
-        favoriteArts={favoriteArts}
-        onToggle={toggleFavoriteArt}
-        art={art}
-        isLoading={isLoading}
-        error={error}
-        {...pageProps}
-      />
       <Navigation />
+      <ContentWrapper>
+        <Component
+          favoriteArts={favoriteArts}
+          onToggle={toggleFavoriteArt}
+          art={art}
+          isLoading={isLoading}
+          error={error}
+          {...pageProps}
+        />
+      </ContentWrapper>
     </>
   );
 }
+
+const ContentWrapper = styled.div`
+  max-width: 80%;
+  margin: 0 auto;
+`;

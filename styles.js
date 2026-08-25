@@ -8,7 +8,12 @@ export default createGlobalStyle`
   }
 
   body {
+   
+
+   
     margin: 0;
     font-family: system-ui;
+    background-color: #1a1a1d;
+    color: #e8e6e3;
   }
 `;
