@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { useRouter } from "next/router";
+import styled from "styled-components";
 
 export default function ArtPieceDetail({ art }) {
   const router = useRouter();
@@ -7,18 +8,86 @@ export default function ArtPieceDetail({ art }) {
   const piece = art.find((p) => p.slug === slug);
   if (!piece) return <p>Loading ...</p>;
   return (
-    <div>
-      <h1>{piece.name}</h1>
-      <h2>{piece.year}</h2>
-      <h3>{piece.genre}</h3>
-      <p>by {piece.artist}</p>
+    <DetailWrapper>
+      <ImageWrapper>
+        <Image
+          src={piece.imageSource}
+          width={piece.dimensions.width}
+          height={piece.dimensions.height}
+          style={{ width: "100%", height: "auto" }}
+        />
+      </ImageWrapper>
 
-      <Image
-        src={piece.imageSource}
-        width={piece.dimensions.width}
-        height={piece.dimensions.height}
-      />
-      <button onClick={() => router.push("/art-pieces")}>Back</button>
-    </div>
+      <Title>{piece.name}</Title>
+      <Artist>by {piece.artist}</Artist>
+
+      <ArtistDetails>
+        <MetaItem>{piece.year}</MetaItem>
+        <MetaDivider>·</MetaDivider>
+        <MetaItem>{piece.genre}</MetaItem>
+      </ArtistDetails>
+
+      <BackButton onClick={() => router.push("/art-pieces")}>← Back</BackButton>
+    </DetailWrapper>
   );
 }
+
+const DetailWrapper = styled.div`
+  max-width: 700px;
+  margin: 40px auto;
+  text-align: center;
+`;
+
+const ImageWrapper = styled.div`
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 24px;
+`;
+
+const Title = styled.h1`
+  font-size: 1.75rem;
+  font-weight: 600;
+  color: #e8e6e3;
+  margin: 0 0 4px;
+`;
+
+const Artist = styled.h2`
+  font-size: 1rem;
+  font-weight: 400;
+  color: #e8e6e3;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  margin: 0 0 16px;
+`;
+
+const ArtistDetails = styled.div`
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  color: #e8e6e3
+  font-size: 0.9rem;
+  margin-bottom: 32px;
+`;
+
+const MetaItem = styled.h3`
+  font-weight: 400;
+  font-size: inherit;
+  margin: 0;
+`;
+
+const MetaDivider = styled.span``;
+
+const BackButton = styled.button`
+  background: none;
+  border: 1px solid #e8e6e3;
+  color: #e8e6e3;
+  padding: 8px 20px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background 0.15s ease;
+
+  &:hover {
+    background: #15669d;
+  }
+`;

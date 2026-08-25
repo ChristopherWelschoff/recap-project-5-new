@@ -65,8 +65,9 @@ const SpotlightWrapper = styled.div`
 `;
 
 const ArtistName = styled.p`
+  flex-wrap: wrap;
   align-items: center;
-  font-size: 3rem;
+  font-size: 2rem;
   text-transform: uppercase;
   letter-spacing: 0.05em;
   margin-top: 16px;
@@ -75,6 +76,6 @@ const ArtistName = styled.p`
 const StyledTitle = styled.div`
   display: flex;
   align-items: baseline;
-  gap: 12px;
+  gap: 2px;
   margin-top: 16px;
 `;
