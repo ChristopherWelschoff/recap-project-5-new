@@ -18,6 +18,7 @@ export default function ArtPieceDetail({ art, comments, onAddComment }) {
           width={piece.dimensions.width}
           height={piece.dimensions.height}
           style={{ width: "100%", height: "auto" }}
+          alt={piece.name}
         />
       </ImageWrapper>
       <ColorPalette colors={piece.colors} />
