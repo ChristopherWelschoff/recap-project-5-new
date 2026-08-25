@@ -25,7 +25,7 @@ export default function ArtPieceDetail({ art, comments, onAddComment }) {
 
       <ArtistDetails>
         <MetaItem>{piece.year}</MetaItem>
-        <MetaDivider>·</MetaDivider>
+        <span>·</span>
         <MetaItem>{piece.genre}</MetaItem>
       </ArtistDetails>
       <CommentSection comments={comments} slug={slug} />
@@ -78,8 +78,6 @@ const MetaItem = styled.h3`
   font-size: inherit;
   margin: 0;
 `;
-
-const MetaDivider = styled.span``;
 
 const BackButton = styled.button`
   background: none;
