@@ -39,7 +39,7 @@ const DetailWrapper = styled.div`
 `;
 
 const ImageWrapper = styled.div`
-  border-radius: 8px;
+  border-radius: 7px;
   overflow: hidden;
   margin-bottom: 24px;
 `;
