@@ -1,7 +1,7 @@
 import GlobalStyle from "../styles";
 import Navigation from "@/components/Navigation";
 import { useState, useEffect } from "react";
-import { FavoriteButton } from "@/components/FavoriteButton/FavoriteButton";
+import useLocalStorageState from "use-local-storage-state";
 
 export default function App({ Component, pageProps }) {
   const URL = "https://example-apis.vercel.app/api/art";
@@ -9,7 +9,9 @@ export default function App({ Component, pageProps }) {
   const [art, setArt] = useState([]);
   const [isLoading, setisLoading] = useState(false);
   const [error, setError] = useState(false);
-  const [favoriteArts, setFavoriteArts] = useState([]);
+  const [favoriteArts, setFavoriteArts] = useLocalStorageState("Favorites", {
+    defaultValue: [],
+  });
 
   useEffect(() => {
     async function fetchArt() {
