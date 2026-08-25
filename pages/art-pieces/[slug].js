@@ -61,7 +61,9 @@ export default function ArtPieceDetail({
       <CommentSection comments={comments} slug={slug} />
       <CommentForm slug={slug} onAddComment={onAddComment} />
 
-      <BackButton onClick={() => router.push("/art-pieces")}>← Back</BackButton>
+      <BackButton onClick={() => router.push("/art-pieces")}>
+        Show all Art-Pieces
+      </BackButton>
     </DetailWrapper>
   );
 }
