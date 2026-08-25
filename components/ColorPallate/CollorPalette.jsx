@@ -5,7 +5,6 @@ export default function ColorPalette({ colors }) {
         <div
           key={color}
           style={{
-            flexDirection: "rows",
             backgroundColor: color,
             width: "50px",
             height: "50px",

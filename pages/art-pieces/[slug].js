@@ -9,7 +9,7 @@ export default function ArtPieceDetail({ art, comments, onAddComment }) {
   const { slug } = router.query;
   const piece = art.find((p) => p.slug === slug);
   if (!piece) return <p>Loading ...</p>;
-  console.log(piece);
+
   return (
     <DetailWrapper>
       <ImageWrapper>
