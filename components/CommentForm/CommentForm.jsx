@@ -9,7 +9,13 @@ export default function CommentForm({ slug, onAddComment }) {
 
   return (
     <form onSubmit={handleSubmit}>
-      <input type="text" name="textInput" />
+      <textarea
+        type="text"
+        name="textInput"
+        rows={4}
+        cols={40}
+        style={{ resize: "none" }}
+      ></textarea>
       <button type="submit">Send</button>
     </form>
   );

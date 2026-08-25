@@ -13,15 +13,7 @@ export default function App({ Component, pageProps }) {
     defaultValue: [],
   });
   const [comments, setComments] = useLocalStorageState("Comments", {
-    defaultValue: [
-      {
-        piece: "wheat-field-with-cypresses",
-        comments: [
-          { text: "cool painting", date: "2026-08-25T10:31:28.268Z" },
-          { text: "this shit is insane", date: "2026-08-25T10:33:28.268Z" },
-        ],
-      },
-    ],
+    defaultValue: [],
   });
 
   useEffect(() => {
