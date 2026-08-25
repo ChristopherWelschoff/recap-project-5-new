@@ -3,12 +3,13 @@ import CommentSection from "@/components/CommentSection/CommentSection";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import styled from "styled-components";
-
+import ColorPalette from "@/components/ColorPallate/CollorPalette";
 export default function ArtPieceDetail({ art, comments, onAddComment }) {
   const router = useRouter();
   const { slug } = router.query;
   const piece = art.find((p) => p.slug === slug);
   if (!piece) return <p>Loading ...</p>;
+  console.log(piece);
   return (
     <DetailWrapper>
       <ImageWrapper>
@@ -19,7 +20,7 @@ export default function ArtPieceDetail({ art, comments, onAddComment }) {
           style={{ width: "100%", height: "auto" }}
         />
       </ImageWrapper>
-
+      <ColorPalette colors={piece.colors} />
       <Title>{piece.name}</Title>
       <Artist>by {piece.artist}</Artist>
 
