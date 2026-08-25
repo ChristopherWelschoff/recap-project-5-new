@@ -1,3 +1,4 @@
+import Link from "next/link";
 import Image from "next/image";
 import { FavoriteButton } from "@/components/FavoriteButton/FavoriteButton";
 import { useEffect, useState } from "react";
@@ -32,12 +33,14 @@ export default function HomePage({
       ) : (
         <div>
           <p>{spotlightArt.artist}</p>
+          <Link href={`/art-pieces/${spotlightArt.slug}`}>
           <Image
             alt="sptlightArt"
             src={spotlightArt.imageSource}
             width={spotlightArt.dimensions.width}
             height={spotlightArt.dimensions.height}
           />
+          </Link>
           <FavoriteButton
             isFavorite={isFavorite}
             onToggle={() => onToggle(spotlightArt.slug)}
