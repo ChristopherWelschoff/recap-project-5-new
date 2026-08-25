@@ -33,6 +33,7 @@ export default function HomePage({
         <div>
           <p>{spotlightArt.artist}</p>
           <Image
+            alt="sptlightArt"
             src={spotlightArt.imageSource}
             width={spotlightArt.dimensions.width}
             height={spotlightArt.dimensions.height}
