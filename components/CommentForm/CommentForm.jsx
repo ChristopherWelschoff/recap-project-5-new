@@ -5,7 +5,12 @@ export default function CommentForm({ slug, onAddComment }) {
     event.preventDefault();
     const commentText = event.target.textInput.value;
     const date = new Date();
-    onAddComment(slug, commentText, date);
+    const dateGER = date.toLocaleString("de-DE", {
+      timeZone: "Europe/Berlin",
+      dateStyle: "short",
+      timeStyle: "short",
+    });
+    onAddComment(slug, commentText, dateGER);
     event.target.reset();
   }
 
