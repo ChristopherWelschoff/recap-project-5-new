@@ -329,5 +329,5 @@ test("renders the BackButton", () => {
     />
   );
 
-  expect(screen.getByRole("button", { name: "← Back" })).toBeInTheDocument();
+  expect(screen.getByRole("button", { name: "Show all Art-Pieces" })).toBeInTheDocument();
 });
