@@ -1,12 +1,29 @@
+"use-client";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import styled from "styled-components";
 
 export default function Navigation() {
+  const pathname = usePathname();
+
+  const links = [
+    { href: "/", label: "Spotlight" },
+    { href: "/art-pieces", label: "Art-Pieces" },
+    { href: "/favorites", label: "Favorites" },
+  ];
+
   return (
     <StyledNav>
-      <StyledLink href="/">Spotlight</StyledLink>
-      <StyledLink href="/art-pieces">Art-Pieces</StyledLink>
-      <StyledLink href="/favorites">Favorites</StyledLink>
+      {links.map((link) => (
+        <StyledLink
+          key={link.href}
+          href={link.href}
+          $active={pathname === link.href}
+        >
+          {link.label}
+        </StyledLink>
+      ))}
     </StyledNav>
   );
 }
@@ -25,10 +42,15 @@ const StyledNav = styled.nav`
 `;
 
 const StyledLink = styled(Link)`
-  color: #e8e6e3;
+  color: ${(props) => (props.$active ? "#ffffff" : "#e8e6e3")};
+  font-weight: ${(props) => (props.$active ? "700" : "400")};
   text-decoration: none;
-  font-size: 1.5;
+  font-size: 1.5rem;
   letter-spacing: 0.03em;
   text-transform: uppercase;
   transition: color 0.15s ease;
+
+  &:hover {
+    color: #ffffff;
+  }
 `;
