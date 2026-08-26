@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import HomePage from ".";
+import HomePage from "../pages";
 
 const dummyData = [
   {
