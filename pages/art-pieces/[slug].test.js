@@ -1,0 +1,333 @@
+import { fireEvent, render, screen } from "@testing-library/react";
+import ArtPieceDetail from "./[slug]";
+
+jest.mock("next/router", () => ({
+  useRouter: () => ({
+    query: { slug: "wheat-field-with-cypresses" },
+    push: jest.fn(),
+  }),
+}));
+
+const dummyData = [
+  {
+    slug: "wheat-field-with-cypresses",
+    artist: "Vincent van Gogh",
+    name: "Wheat Field with Cypresses",
+    imageSource:
+      "https://example-apis.vercel.app/assets/art/wheat-field-with-cypresses.jpg",
+    year: "1889",
+    genre: "Landscape Painting",
+    colors: ["#37412E", "#8D7332", "#838665", "#718F98", "#9DA59E"],
+    dimensions: { height: 1528, width: 1920, type: "jpg" },
+  },
+  {
+    slug: "madame-roulin-and-her-baby",
+    artist: "Vincent van Gogh",
+    name: "Madame Roulin and Her Baby",
+    imageSource:
+      "https://example-apis.vercel.app/assets/art/madame-roulin-and-her-baby.jpg",
+    year: "1888",
+    genre: "Portrait Painting",
+    colors: ["#424C17", "#8F7422", "#B09731", "#D5A906", "#C8CBAC"],
+    dimensions: { height: 2392, width: 1920, type: "jpg" },
+  },
+  {
+    slug: "the-harvesters",
+    artist: "Pieter Bruegel the Elder",
+    name: "The Harvesters",
+    imageSource:
+      "https://example-apis.vercel.app/assets/art/the-harvesters.jpg",
+    year: "1565",
+    genre: "Landscape Painting",
+    colors: ["#4D3C25", "#9A692E", "#7C8263", "#B78D53", "#C7B7A4"],
+    dimensions: { height: 1415, width: 1920, type: "jpg" },
+  },
+  {
+    slug: "circus-sideshow",
+    artist: "Georges Seurat",
+    name: "Circus Sideshow (Parade de cirque)",
+    imageSource:
+      "https://example-apis.vercel.app/assets/art/circus-sideshow.jpg",
+    year: "1887–88",
+    genre: "Pointillist Painting",
+    colors: ["#2D2A33", "#4B383A", "#484041", "#5E5151", "#906D5A"],
+    dimensions: { height: 1283, width: 1920, type: "jpg" },
+  },
+  {
+    slug: "the-card-players",
+    artist: "Paul Cézanne",
+    name: "The Card Players",
+    imageSource:
+      "https://example-apis.vercel.app/assets/art/the-card-players.jpg",
+    year: "1890–92",
+    genre: "Genre Painting",
+    colors: ["#2A2B2D", "#484341", "#5B615F", "#837C6D", "#939B99"],
+    dimensions: { height: 1528, width: 1920, type: "jpg" },
+  },
+  {
+    slug: "rough-waves",
+    artist: "Ogata Kōrin",
+    name: "Rough Waves",
+    imageSource: "https://example-apis.vercel.app/assets/art/rough-waves.jpg",
+    year: "ca. 1704–9",
+    genre: "Japanese Screen Painting",
+    colors: ["#28312A", "#64644A", "#877A58", "#9B8A66", "#A59B80"],
+    dimensions: { height: 1712, width: 1920, type: "jpg" },
+  },
+  {
+    slug: "the-great-wave-off-kanagawa",
+    artist: "Katsushika Hokusai",
+    name: "Under the Wave off Kanagawa (The Great Wave)",
+    imageSource:
+      "https://example-apis.vercel.app/assets/art/the-great-wave-off-kanagawa.jpg",
+    year: "ca. 1830–32",
+    genre: "Ukiyo-e Print",
+    colors: ["#405266", "#617986", "#ADADA0", "#E2D0B1", "#F0E0C6"],
+    dimensions: { height: 1313, width: 1920, type: "jpg" },
+  },
+  {
+    slug: "mada-primavesi",
+    artist: "Gustav Klimt",
+    name: "Mäda Primavesi (1903–2000)",
+    imageSource:
+      "https://example-apis.vercel.app/assets/art/mada-primavesi.jpg",
+    year: "1912–13",
+    genre: "Portrait Painting",
+    colors: ["#6F7372", "#9D769E", "#AB9DA6", "#C7B5A7", "#CBC5BC"],
+    dimensions: { height: 2588, width: 1920, type: "jpg" },
+  },
+  {
+    slug: "schiele-self-portrait",
+    artist: "Egon Schiele",
+    name: "Self-Portrait",
+    imageSource:
+      "https://example-apis.vercel.app/assets/art/schiele-self-portrait.jpg",
+    year: "1911",
+    genre: "Portrait Drawing",
+    colors: ["#9F664C", "#D1996E", "#DFBB8F", "#E4C499", "#ECE6DE"],
+    dimensions: { height: 2715, width: 1920, type: "jpg" },
+  },
+  {
+    slug: "selfportrait-klaus-stille",
+    artist: "Klaus Stille",
+    name: "Selfportrait",
+    imageSource:
+      "https://example-apis.vercel.app/assets/art/selfportrait-klaus-stille.jpg",
+    year: "2020",
+    genre: "Portrait Painting",
+    colors: ["#4D5A50", "#8D7673", "#B09271", "#A09D97", "#DAC8B9"],
+    dimensions: { height: 2608, width: 1920, type: "jpg" },
+  },
+  {
+    slug: "umbilical-ambiguity",
+    artist: "Klaus Stille",
+    name: "Umbilical Ambiguity",
+    imageSource:
+      "https://example-apis.vercel.app/assets/art/umbilical-ambiguity.jpg",
+    year: "2021",
+    genre: "Linoprint",
+    colors: ["#102463", "#424D77", "#646C8B", "#7D829A", "#CECCC9"],
+    dimensions: { height: 2786, width: 1920, type: "jpg" },
+  },
+];
+const dummyDataFavorites = [
+  {
+    slug: "madame-roulin-and-her-baby",
+    artist: "Vincent van Gogh",
+    name: "Madame Roulin and Her Baby",
+    imageSource:
+      "https://example-apis.vercel.app/assets/art/madame-roulin-and-her-baby.jpg",
+    year: "1888",
+    genre: "Portrait Painting",
+    colors: ["#424C17", "#8F7422", "#B09731", "#D5A906", "#C8CBAC"],
+    dimensions: { height: 2392, width: 1920, type: "jpg" },
+  },
+
+  {
+    slug: "circus-sideshow",
+    artist: "Georges Seurat",
+    name: "Circus Sideshow (Parade de cirque)",
+    imageSource:
+      "https://example-apis.vercel.app/assets/art/circus-sideshow.jpg",
+    year: "1887–88",
+    genre: "Pointillist Painting",
+    colors: ["#2D2A33", "#4B383A", "#484041", "#5E5151", "#906D5A"],
+    dimensions: { height: 1283, width: 1920, type: "jpg" },
+  },
+  {
+    slug: "the-card-players",
+    artist: "Paul Cézanne",
+    name: "The Card Players",
+    imageSource:
+      "https://example-apis.vercel.app/assets/art/the-card-players.jpg",
+    year: "1890–92",
+    genre: "Genre Painting",
+    colors: ["#2A2B2D", "#484341", "#5B615F", "#837C6D", "#939B99"],
+    dimensions: { height: 1528, width: 1920, type: "jpg" },
+  },
+
+  {
+    slug: "the-great-wave-off-kanagawa",
+    artist: "Katsushika Hokusai",
+    name: "Under the Wave off Kanagawa (The Great Wave)",
+    imageSource:
+      "https://example-apis.vercel.app/assets/art/the-great-wave-off-kanagawa.jpg",
+    year: "ca. 1830–32",
+    genre: "Ukiyo-e Print",
+    colors: ["#405266", "#617986", "#ADADA0", "#E2D0B1", "#F0E0C6"],
+    dimensions: { height: 1313, width: 1920, type: "jpg" },
+  },
+
+  {
+    slug: "schiele-self-portrait",
+    artist: "Egon Schiele",
+    name: "Self-Portrait",
+    imageSource:
+      "https://example-apis.vercel.app/assets/art/schiele-self-portrait.jpg",
+    year: "1911",
+    genre: "Portrait Drawing",
+    colors: ["#9F664C", "#D1996E", "#DFBB8F", "#E4C499", "#ECE6DE"],
+    dimensions: { height: 2715, width: 1920, type: "jpg" },
+  },
+
+  {
+    slug: "umbilical-ambiguity",
+    artist: "Klaus Stille",
+    name: "Umbilical Ambiguity",
+    imageSource:
+      "https://example-apis.vercel.app/assets/art/umbilical-ambiguity.jpg",
+    year: "2021",
+    genre: "Linoprint",
+    colors: ["#102463", "#424D77", "#646C8B", "#7D829A", "#CECCC9"],
+    dimensions: { height: 2786, width: 1920, type: "jpg" },
+  },
+];
+const dummyComments = [
+  {
+    piece: "wheat-field-with-cypresses",
+    comments: [{ text: "Great Picture", date: "12.34.5678" }],
+  },
+];
+
+test("renders image correctly", () => {
+  const onToggle = jest.fn();
+  const onAddComment = jest.fn();
+
+  render(
+    <ArtPieceDetail
+      favoriteArts={dummyDataFavorites}
+      onToggle={onToggle}
+      art={dummyData}
+      comments={dummyComments}
+      onAddComment={onAddComment}
+    />
+  );
+  expect(screen.getByAltText("Wheat Field with Cypresses")).toBeInTheDocument();
+});
+
+test("renders the title correctly", () => {
+  const onToggle = jest.fn();
+  const onAddComment = jest.fn();
+
+  render(
+    <ArtPieceDetail
+      favoriteArts={dummyDataFavorites}
+      onToggle={onToggle}
+      art={dummyData}
+      comments={dummyComments}
+      onAddComment={onAddComment}
+    />
+  );
+  expect(
+    screen.getByRole("heading", { name: "Wheat Field with Cypresses" })
+  ).toBeInTheDocument();
+});
+
+test("renders the FavoriteButton correctly", () => {
+  const onToggle = jest.fn();
+  const onAddComment = jest.fn();
+
+  render(
+    <ArtPieceDetail
+      favoriteArts={dummyDataFavorites}
+      onToggle={onToggle}
+      art={dummyData}
+      comments={dummyComments}
+      onAddComment={onAddComment}
+    />
+  );
+
+  const favoriteButton = screen.getByTestId(
+    "favorite-button-wheat-field-with-cypresses"
+  );
+
+  expect(favoriteButton).toBeInTheDocument();
+  expect(favoriteButton).toHaveStyle({ fill: "none" });
+
+  fireEvent.click(favoriteButton);
+  expect(onToggle).toHaveBeenCalledWith("wheat-field-with-cypresses");
+});
+
+test("renders the artist correctly", () => {
+  render(
+    <ArtPieceDetail
+      favoriteArts={dummyDataFavorites}
+      onToggle={jest.fn()}
+      art={dummyData}
+      comments={dummyComments}
+      onAddComment={jest.fn()}
+    />
+  );
+
+  expect(screen.getByText("by Vincent van Gogh")).toBeInTheDocument();
+});
+
+test("renders the CommentSection with a comment", () => {
+  render(
+    <ArtPieceDetail
+      favoriteArts={dummyDataFavorites}
+      onToggle={jest.fn()}
+      art={dummyData}
+      comments={dummyComments}
+      onAddComment={jest.fn()}
+    />
+  );
+
+  expect(
+    screen.getByRole("heading", { name: "Comments:" })
+  ).toBeInTheDocument();
+  expect(screen.getByText("Great Picture")).toBeInTheDocument();
+  expect(screen.getByText("12.34.5678")).toBeInTheDocument();
+});
+
+test("renders the CommentForm", () => {
+  const { container } = render(
+    <ArtPieceDetail
+      favoriteArts={dummyDataFavorites}
+      onToggle={jest.fn()}
+      art={dummyData}
+      comments={dummyComments}
+      onAddComment={jest.fn()}
+    />
+  );
+
+  expect(container.querySelector("form")).toBeInTheDocument();
+  expect(
+    screen.getByPlaceholderText("Share your thoughts...")
+  ).toBeInTheDocument();
+  expect(screen.getByRole("button", { name: "Send" })).toBeInTheDocument();
+});
+
+test("renders the BackButton", () => {
+  render(
+    <ArtPieceDetail
+      favoriteArts={dummyDataFavorites}
+      onToggle={jest.fn()}
+      art={dummyData}
+      comments={dummyComments}
+      onAddComment={jest.fn()}
+    />
+  );
+
+  expect(screen.getByRole("button", { name: "Show all Art-Pieces" })).toBeInTheDocument();
+});

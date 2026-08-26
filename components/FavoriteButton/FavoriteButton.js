@@ -9,6 +9,7 @@ export function FavoriteButton({ isFavorite, onToggle, slug }) {
       onClick={() => onToggle(slug)}
       width={24}
       height={24}
+      data-testid={`favorite-button-${slug}`}
     />
   );
 }

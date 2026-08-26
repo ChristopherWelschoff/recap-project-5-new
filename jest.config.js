@@ -12,8 +12,18 @@ const customJestConfig = {
   setupFilesAfterEnv: ["<rootDir>/jest.setup.js"],
   // if using TypeScript with a baseUrl set to the root directory then you need the below for alias' to work
   moduleDirectories: ["node_modules", "<rootDir>/"],
+  moduleNameMapper: {
+    "\\.svg$": "<rootDir>/__mocks__/svgMock.jsx",
+  },
   testEnvironment: "jest-environment-jsdom",
 };
 
-// createJestConfig is exported this way to ensure that next/jest can load the Next.js config which is async
-module.exports = createJestConfig(customJestConfig);
+// Put the SVG component mock before Next.js's default file mock.
+module.exports = async (...args) => {
+  const config = await createJestConfig(customJestConfig)(...args);
+  config.moduleNameMapper = {
+    "\\.svg$": "<rootDir>/__mocks__/svgMock.jsx",
+    ...config.moduleNameMapper,
+  };
+  return config;
+};
