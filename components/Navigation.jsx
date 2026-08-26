@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import styled from "styled-components";
 
 export default function Navigation() {
-  const pathname = usePathname(); // z.B. "/art-pieces"
+  const pathname = usePathname(); 
 
   const links = [
     { href: "/", label: "Spotlight" },
