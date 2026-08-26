@@ -1,4 +1,4 @@
-"use client"; // nötig, weil usePathname() den Browser-Zustand braucht
+"use-client";
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
